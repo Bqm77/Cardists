@@ -19,6 +19,10 @@
       color-scheme: dark;
       color: #e8f0ff;
     }
+
+    /* smooth scrolling for in-page links */
+    html { scroll-behavior: smooth; }
+
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;background:linear-gradient(180deg,#05121b 0%,var(--bg) 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     .container{max-width:var(--container);margin:0 auto;padding:1rem}
@@ -44,6 +48,7 @@
     /* CARDS */
     .hero-right{flex:1;display:flex;justify-content:center;align-items:center;position:relative}
     .cards{width:360px;height:480px;position:relative;perspective:1400px}
+    .card-link{display:block;color:inherit;text-decoration:none;cursor:pointer}
     .card{position:absolute;left:0;right:0;margin:auto;width:290px;height:170px;border-radius:18px;background:var(--card-bg);backdrop-filter: blur(6px);box-shadow: 0 22px 50px rgba(2,6,14,0.6);display:flex;overflow:hidden;flex-direction:row;align-items:stretch}
     .card-art{width:45%;min-width:120px;background-size:cover;background-position:center}
     .card-info{padding:1rem;display:flex;flex-direction:column;justify-content:center}
@@ -82,6 +87,28 @@
 
     /* utilities */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* Bright section backgrounds (blue, green, yellow) */
+    .bg-blue{background:linear-gradient(180deg,#0b74ff22,#064ea022); color: #fff;}
+    .bg-green{background:linear-gradient(180deg,#10b98122,#068a5722); color: #fff;}
+    .bg-yellow{background:linear-gradient(180deg,#facc1522,#d4a10f22); color: #000;} /* darker text for yellow for contrast */
+
+    /* make tiles/features a bit transparent so section color shows */
+    .bg-blue .tile,
+    .bg-green .tile,
+    .bg-yellow .tile,
+    .bg-blue .feature,
+    .bg-green .feature,
+    .bg-yellow .feature {
+      background: rgba(255,255,255,0.03);
+      box-shadow: none;
+    }
+
+    /* detail section */
+    .section-detail{padding:5rem 0 3rem;border-top:1px solid rgba(255,255,255,0.02)}
+    .detail-inner{max-width:900px;margin:0 auto;padding:0 1rem}
+    .detail-hed{font-size:2rem;margin:0 0 .6rem}
+    .detail-copy{font-size:1rem;line-height:1.6;color:inherit}
 
     @media(max-width:980px){
       .hero-inner{flex-direction:column-reverse;gap:2rem}
@@ -128,22 +155,26 @@
 
         <div class="hero-right" aria-hidden="true">
           <div class="cards" id="cards">
-            <div class="card card-c">
-              <div class="card-art" style="background-image:linear-gradient(135deg,#ff8a80,#ff80ab)"></div>
-              <div class="card-info">
-                <div class="card-title">Qazacatism</div>
-                <div class="card-meta">Card Game • 7 min</div>
+            <!-- wrap cards in anchors so clicking jumps to the detail sections -->
+            <a class="card-link" href="#game-qazacatism" title="Qazacatism — details">
+              <div class="card card-c">
+                <div class="card-art" style="background-image:linear-gradient(135deg,#ff8a80,#ff80ab)"></div>
+                <div class="card-info">
+                  <div class="card-title">Qazacatism</div>
+                  <div class="card-meta">Card Game • 7 min</div>
+                </div>
               </div>
-            </div>
+            </a>
 
-
-            <div class="card card-a">
-              <div class="card-art" style="background-image:linear-gradient(135deg,#5c6bc0,#3f51b5)"></div>
-              <div class="card-info">
-                <div class="card-title">Ensnapifacation</div>
-                <div class="card-meta">Card Game • Recommended</div>
+            <a class="card-link" href="#game-ensnapifacation" title="Ensnapifacation — details">
+              <div class="card card-a">
+                <div class="card-art" style="background-image:linear-gradient(135deg,#5c6bc0,#3f51b5)"></div>
+                <div class="card-info">
+                  <div class="card-title">Ensnapifacation</div>
+                  <div class="card-meta">Card Game • Recommended</div>
+                </div>
               </div>
-            </div>
+            </a>
 
             <svg class="bg-shape" viewBox="0 0 600 600" preserveAspectRatio="none" aria-hidden="true">
               <defs>
@@ -159,30 +190,60 @@
       </div>
     </section>
 
-    <section id="games" class="section-lower" aria-labelledby="games-heading">
+    <section id="games" class="section-lower bg-blue" aria-labelledby="games-heading">
       <div class="container">
         <h2 id="games-heading">Our games</h2>
         <p class="section-lead">A complete collection of our games... I know it's not much, but hopefully there will be more coming soon</p>
 
         <div class="grid">
-          <article class="tile" tabindex="0">
-            <div class="tile-art" style="background-image:linear-gradient(180deg,#ff9a9e,#fecfef)"></div>
-            <h3>Ensnapifacation</h3>
-            <p class="tile-meta">Card game • 15min</p>
-          </article>
+          <!-- tiles also link to details -->
+          <a class="card-link" href="#game-ensnapifacation">
+            <article class="tile" tabindex="0">
+              <div class="tile-art" style="background-image:linear-gradient(180deg,#ff9a9e,#fecfef)"></div>
+              <h3>Ensnapifacation</h3>
+              <p class="tile-meta">Card game • 15min</p>
+            </article>
+          </a>
 
-          <article class="tile" tabindex="0">
-            <div class="tile-art" style="background-image:linear-gradient(180deg,#a0c4ff,#bdb2ff)"></div>
-            <h3>Qazacatism</h3>
-            <p class="tile-meta">Card Game • 7min</p>
-          </article>
-
-         
+          <a class="card-link" href="#game-qazacatism">
+            <article class="tile" tabindex="0">
+              <div class="tile-art" style="background-image:linear-gradient(180deg,#a0c4ff,#bdb2ff)"></div>
+              <h3>Qazacatism</h3>
+              <p class="tile-meta">Card Game • 7min</p>
+            </article>
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="features" class="section-lower" aria-labelledby="features-heading">
+    <!-- Game detail sections (each card goes to its own section) -->
+    <section id="game-ensnapifacation" class="section-detail bg-green" aria-labelledby="ensnap-hed">
+      <div class="detail-inner">
+        <h2 id="ensnap-hed" class="detail-hed">Ensnapifacation</h2>
+        <p class="detail-copy">
+          Ensnapifacation is a playful card game full of surprises. Players take turns drawing challenge cards and must react quickly — bluffing and laughter encouraged.
+        </p>
+        <p class="detail-copy">
+          How to play (short): each round, one player reads a prompt, others respond with a card. The reader picks the funniest or best match. Rounds are quick and perfect for parties.
+        </p>
+        <p><a href="#games" class="btn ghost">Back to games</a></p>
+      </div>
+    </section>
+
+    <section id="game-qazacatism" class="section-detail bg-yellow" aria-labelledby="qaza-hed">
+      <div class="detail-inner">
+        <h2 id="qaza-hed" class="detail-hed">Qazacatism</h2>
+        <p class="detail-copy">
+          Qazacatism is a quirky family-friendly card game created to spark conversation and silly debates. Expect strange scenarios, creative solutions, and lots of laughs.
+        </p>
+        <p class="detail-copy">
+          Quick overview: Players draw scenario cards and secretly choose a response. Votes are cast and the highest-voted answers win points. Simple setup, big replayability.
+        </p>
+        <p><a href="#games" class="btn ghost">Back to games</a></p>
+      </div>
+    </section>
+
+    <section id="features" class="section-lower bg-green" aria-labelledby="features-heading">
       <div class="container">
         <h2 id="features-heading">Why we love it</h2>
         <div class="features-grid">
@@ -202,7 +263,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section-lower" aria-labelledby="contact-heading">
+    <section id="contact" class="section-lower bg-blue" aria-labelledby="contact-heading">
       <div class="container">
         <h2 id="contact-heading">Get in touch</h2>
         <p>Wondering about something, asking about a game, or just saying hi? Email <a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a></p>
