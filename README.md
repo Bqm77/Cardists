@@ -26,7 +26,7 @@ Collect two Super cards to win instantly—but the moment you're close, everyone
 
 **Ready to play?**
 
-### [**🃏 PLAY NOW →**](https://bqm77.github.io/Qazacatism/)
+### [**🃏 PLAY NOW →**](https://bqm77.github.io/Cardists/#)
 
 ---
 
