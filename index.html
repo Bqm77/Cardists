@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- This head block sets the page title, description, fonts and includes the page CSS.
-       (Simple: tells the browser about the page and loads the font.) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cardists</title>
@@ -10,9 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* This CSS block sets colors, fonts and layout for the whole site.
-       (Simple: controls how everything looks and responds.) */
-
     :root{
       --bg: #071122;
       --card-bg: rgba(255,255,255,0.02);
@@ -26,28 +21,29 @@
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#05121b 0%,var(--bg) 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#05121b 0%,var(--bg) 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
     .container{max-width:var(--container);margin:0 auto;padding:1rem}
     a{color:inherit}
     .site-header{position:sticky;top:0;background:linear-gradient(180deg,rgba(5,7,10,0.6),transparent);backdrop-filter: blur(6px);z-index:40;border-bottom:1px solid rgba(255,255,255,0.02)}
     .header-inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
     .logo{font-weight:800;letter-spacing:0.6px;font-size:1.05rem;text-decoration:none}
-    .main-nav a{margin-left:1rem;color:var(--muted);text-decoration:none;font-size:.95rem}
+    .main-nav a{margin-left:1rem;color:var(--muted);text-decoration:none;font-size:.95rem;transition:color 0.3s}
+    .main-nav a:hover{color:var(--accent)}
 
-    /* HERO (the Home section) - layout & typography */
     .hero{min-height:78vh;display:flex;align-items:center}
     .hero-inner{display:flex;gap:2.5rem;align-items:center}
     .hero-left{flex:1;max-width:620px}
     .hero-title{font-size:3.2rem;line-height:1.02;margin:0;color:white;font-weight:800}
     .hero-sub{color:var(--muted);margin-top:1rem;font-size:1.05rem}
     .ctas{margin-top:1.5rem;display:flex;gap:.75rem;align-items:center}
-    .btn{padding:.75rem 1.2rem;border-radius:12px;text-decoration:none;font-weight:700;border:0;cursor:pointer}
+    .btn{padding:.75rem 1.2rem;border-radius:12px;text-decoration:none;font-weight:700;border:0;cursor:pointer;transition:all 0.3s}
     .btn.primary{background:var(--accent);color:#022326;box-shadow:0 12px 30px rgba(0,229,196,0.12)}
+    .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,229,196,0.2)}
     .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+    .btn.ghost:hover{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02)}
     .kpis{display:flex;gap:1.25rem;margin-top:1.5rem;list-style:none;padding:0;color:var(--muted)}
     .kpis li{font-weight:600}
 
-    /* CARDS - stacked game cards in the hero */
     .hero-right{flex:1;display:flex;justify-content:center;align-items:center;position:relative}
     .cards{width:360px;height:480px;position:relative;perspective:1400px}
     .card-link{display:block;color:inherit;text-decoration:none;cursor:pointer}
@@ -57,97 +53,47 @@
     .card-title{font-weight:700;font-size:1.05rem}
     .card-meta{font-size:.82rem;color:var(--muted);margin-top:.45rem}
 
-    /* stacking positions */
-    .card-a{transform:translateY(-50px) rotateZ(-6deg) scale(1.03);z-index:4}
-    .card-b{transform:translateY(5px) rotateZ(2deg) scale(.99);z-index:3}
-    .card-c{transform:translateY(70px) rotateZ(6deg) scale(.96);z-index:2}
+    .card-a{transform:translateY(0) rotateZ(0deg) scale(1);z-index:4;transition:transform 0.4s ease}
+    .card-c{transform:translateY(0) rotateZ(0deg) scale(1);z-index:2;transition:transform 0.4s ease}
+    
+    .cards:hover .card-a{transform:translateY(-50px) rotateZ(-6deg) scale(1.03) !important}
+    .cards:hover .card-c{transform:translateY(70px) rotateZ(6deg) scale(.96) !important}
 
     .bg-shape{position:absolute;inset:0;pointer-events:none;opacity:.85;transform:translateY(22%);z-index:1}
 
-    /* LOWER SECTIONS - general spacing and grid */
     .section-lower{padding:4.5rem 0;border-top:1px solid rgba(255,255,255,0.02)}
     .section-lead{color:var(--muted);margin-top:.5rem}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;margin-top:1.5rem}
-    .tile{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:1rem;border-radius:12px;box-shadow:0 12px 30px rgba(1,7,12,0.6);overflow:hidden}
+    .tile{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:1rem;border-radius:12px;box-shadow:0 12px 30px rgba(1,7,12,0.6);overflow:hidden;transition:all 0.3s}
+    .tile:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(1,7,12,0.8)}
     .tile-art{height:700px;border-radius:8px;margin-bottom:.75rem;background-size:cover;background-position:center}
     .tile h3{margin:.2rem 0 .35rem}
     .tile-meta{font-size:.85rem;color:var(--muted)}
 
-    /* features (cards that explain why you like the games) */
     .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
     .feature{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:1.15rem;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.45)}
     .feature h4{margin:0 0 .4rem}
 
-    /* contact form styles */
-    .contact-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem;margin-top:1rem}
-    .contact-form input,.contact-form textarea{width:100%;padding:.8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    .muted{color:var(--muted);font-size:.9rem}
-
-    /* footer */
     .site-footer{border-top:1px solid rgba(255,255,255,0.02);padding:1rem 0;margin-top:2rem}
     .footer-inner{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.95rem}
 
-    /* utilities */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    /* --------------------------
-       Bright section colors
-       --------------------------
-       These define the bright backgrounds used on some sections.
-       (Simple: make the section backgrounds bright so the text is easy to read.)
-    */
     .bg-green{
-      /* bright green background for Home (intro) as requested */
       background: linear-gradient(180deg,#8ef0a0 0%, #34d399 100%);
-      color: #000; /* make text black in green section */
-    }
-
-    .bg-dark{
-      /* dark background used for Features after swapping */
-      background: linear-gradient(180deg,#05121b 0%, #071122 100%);
-      color: #e8f0ff; /* white-ish text on dark background */
-    }
-
-    .bg-blue{
-      /* brighter blue for Games / Contact if used */
-      background: linear-gradient(180deg,#7ec8ff 0%, #2a98ff 100%);
-      color: #000; /* black text on bright blue */
-    }
-
-    .bg-yellow{
-      background: linear-gradient(180deg,#fffb8f 0%, #ffdd57 100%);
       color: #000;
     }
 
-    /* make tiles/features slightly translucent so section color shows but keep readable */
-    .bg-blue .tile,
-    .bg-green .tile,
-    .bg-yellow .tile,
-    .bg-blue .feature,
-    .bg-green .feature,
-    .bg-yellow .feature {
-      background: rgba(255,255,255,0.08);
-      color: inherit;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    .bg-dark{
+      background: linear-gradient(180deg,#05121b 0%, #071122 100%);
+      color: #e8f0ff;
     }
 
-    /* detail section (per-card detail pages on the same page) */
-    .section-detail{padding:5rem 0 3rem;border-top:1px solid rgba(255,255,255,0.02)}
-    .detail-inner{max-width:900px;margin:0 auto;padding:0 1rem}
-    .detail-hed{font-size:2rem;margin:0 0 .6rem}
-    .detail-copy{font-size:1rem;line-height:1.6;color:inherit}
-
-    /* Keep Ensnapifacation text black as you asked previously */
-    #game-ensnapifacation,
-    #game-ensnapifacation .detail-hed,
-    #game-ensnapifacation .detail-copy {
-      color: #000 !important;
+    .bg-blue{
+      background: linear-gradient(180deg,#7ec8ff 0%, #2a98ff 100%);
+      color: #000;
     }
 
-    /* --------------------------
-       Section-specific text color rules
-       -------------------------- */
-    /* Make all text in the Games section black for readability */
     #games,
     #games .section-lead,
     #games .tile,
@@ -156,18 +102,359 @@
       color: #000 !important;
     }
 
-    /* Force hero elements to show black text inside bg-green (Home) */
     .bg-green .hero-title { color: #000 !important; }
-    .bg-green .hero-sub   { color: #0b2b13 !important; } /* darker greenish text */
+    .bg-green .hero-sub   { color: #0b2b13 !important; }
     .bg-green .kpis        { color: #0b2b13 !important; }
     .bg-green .kpis li     { color: #0b2b13 !important; }
 
-    /* Ensure features section uses the dark theme (white text) */
     .bg-dark .feature,
-    .bg-dark .feature h4,
-    .bg-dark .detail-copy,
-    .bg-dark .detail-hed {
+    .bg-dark .feature h4 {
       color: #e8f0ff;
+    }
+
+    /* Interactive Rules Styles */
+    .rules-viewer {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: linear-gradient(to bottom right, rgb(15, 23, 42), rgb(30, 41, 59));
+      border-radius: 1rem;
+      color: white;
+    }
+
+    .rules-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .rules-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: bold;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, rgb(34, 211, 238), rgb(59, 130, 246));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .rules-subtitle {
+      color: rgb(148, 163, 184);
+      font-size: 1.125rem;
+    }
+
+    .game-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .game-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      color: white;
+      background: rgb(51, 65, 85);
+    }
+
+    .game-btn.active-ensnap {
+      background: linear-gradient(to right, rgb(34, 197, 94), rgb(5, 150, 105));
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5);
+    }
+
+    .game-btn.active-qaza {
+      background: linear-gradient(to right, rgb(59, 130, 246), rgb(6, 182, 212));
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+    }
+
+    .mode-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .mode-toggle-inner {
+      background: rgb(30, 41, 59);
+      border-radius: 0.75rem;
+      padding: 0.25rem;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .mode-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: rgb(148, 163, 184);
+    }
+
+    .mode-btn.active {
+      background: rgb(6, 182, 212);
+      color: black;
+      font-weight: bold;
+    }
+
+    .tabs-container {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 0.75rem;
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      white-space: nowrap;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: rgb(148, 163, 184);
+      font-size: 0.9rem;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(to right, rgb(6, 182, 212), rgb(59, 130, 246));
+      color: black;
+      font-weight: bold;
+    }
+
+    .content-area {
+      background: rgba(30, 41, 59, 0.3);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      padding: clamp(1.5rem, 4vw, 2rem);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      min-height: 400px;
+    }
+
+    .full-rules-text {
+      color: rgb(203, 213, 225);
+      line-height: 1.75;
+    }
+
+    .full-rules-text h3 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    .full-rules-text h3:first-child {
+      margin-top: 0;
+    }
+
+    .full-rules-text h4 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .full-rules-text p {
+      margin-bottom: 0.75rem;
+    }
+
+    .full-rules-text ul {
+      list-style-type: disc;
+      padding-left: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .quick-card {
+      background: rgba(0,0,0,0.2);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .quick-card h4 {
+      font-weight: bold;
+      font-size: 1.125rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .quick-card li {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+      color: rgb(203, 213, 225);
+    }
+
+    .info-box {
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+      background: rgba(51, 65, 85, 0.5);
+      border: 1px solid rgb(71, 85, 105);
+      border-radius: 0.75rem;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .search-input::placeholder {
+      color: rgb(148, 163, 184);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: rgb(6, 182, 212);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgb(148, 163, 184);
+    }
+
+    .card-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .card-item {
+      background: rgba(51, 65, 85, 0.3);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid rgba(71, 85, 105, 0.5);
+    }
+
+    .card-header {
+      width: 100%;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: left;
+    }
+
+    .card-header:hover {
+      background: rgba(71, 85, 105, 0.3);
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+    }
+
+    .card-body {
+      padding: 0 1rem 1rem 1rem;
+      display: none;
+    }
+
+    .card-body.expanded {
+      display: block;
+    }
+
+    .card-effect {
+      background: rgba(0,0,0,0.3);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: rgb(203, 213, 225);
+      font-size: 0.9rem;
+    }
+
+    .card-quote {
+      background: rgba(30, 41, 59, 0.5);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border-left: 4px solid rgb(6, 182, 212);
+      color: rgb(148, 163, 184);
+      font-size: 0.875rem;
+      font-style: italic;
+    }
+
+    .setup-list, .phase-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .setup-list li, .phase-list li {
+      display: flex;
+      align-items: start;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      color: rgb(203, 213, 225);
+    }
+
+    .setup-box, .phase-box {
+      background: rgba(51, 65, 85, 0.5);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .phase-box h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-number {
+      background: rgb(168, 85, 247);
+      color: black;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-right: 0.75rem;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     @media(max-width:980px){
@@ -180,16 +467,15 @@
     @media(max-width:520px){
       .cards{width:260px;height:320px}
       .card{width:230px;height:150px}
-      .detail-hed{font-size:1.5rem}
+      .quick-grid{grid-template-columns: 1fr}
+      .card-list{grid-template-columns: 1fr}
     }
   </style>
 </head>
 <body>
-  <!-- This header block shows the top navigation and logo.
-       (Simple: site header with links to sections.) -->
   <header class="site-header" role="banner">
     <div class="container header-inner">
-      <a class="logo" href="#" aria-label="YourBrand home">Cardists</a>
+      <a class="logo" href="#" aria-label="Cardists home">Cardists</a>
       <nav class="main-nav" role="navigation" aria-label="Main navigation">
         <a href="#intro">Home</a>
         <a href="#games">Games</a>
@@ -200,8 +486,6 @@
   </header>
 
   <main>
-    <!-- Intro / Home section
-         (Simple: main hero. I added the bright green background here and set text black.) -->
     <section id="intro" class="hero bg-green" aria-labelledby="hero-heading">
       <div class="container hero-inner">
         <div class="hero-left">
@@ -218,13 +502,11 @@
           </ul>
         </div>
 
-        <!-- Cards / clickable links -->
         <div class="hero-right" aria-hidden="false">
-<div class="cards" id="cards">
-  <div class="cards-bg" style="position:absolute;top:150px;left:50%;transform:translateX(-50%);width:360px;height:360px;background-image:url('resources/Cardist%20logo.png');background-size:cover;background-position:center;border-radius:12px;z-index:0;pointer-events:none;"></div>
+          <div class="cards" id="cards">
+            <div class="cards-bg" style="position:absolute;top:150px;left:50%;transform:translateX(-50%);width:360px;height:360px;background-image:url('resources/Cardist%20logo.png');background-size:cover;background-position:center;border-radius:12px;z-index:0;pointer-events:none;"></div>
 
-  <!-- Ensnapifacation card uses resources/Back.png as requested -->
-            <a class="card-link" href="#game-ensnapifacation" title="Ensnapifacation — details">
+            <a class="card-link" href="#games" title="Ensnapifacation - details">
               <div class="card card-a" role="group" aria-label="Ensnapifacation card">
                 <div class="card-art" style="background-image:url('resources/Back.png');background-size:cover;background-position:center" role="img" aria-label="Ensnapifacation image"></div>
                 <div class="card-info">
@@ -234,8 +516,7 @@
               </div>
             </a>
 
-            <!-- Qazacatism card uses resources/qazacatism-cover.png as requested -->
-            <a class="card-link" href="#game-qazacatism" title="Qazacatism — details">
+            <a class="card-link" href="#games" title="Qazacatism - details">
               <div class="card card-c" role="group" aria-label="Qazacatism card">
                 <div class="card-art" style="background-image:url('resources/qazacatism-cover.png');background-size:cover;background-position:center" role="img" aria-label="Qazacatism image"></div>
                 <div class="card-info">
@@ -259,142 +540,67 @@
       </div>
     </section>
 
-    <!-- Games section
-         (Simple: lists the playable games. Text here is forced to black for readability.) -->
     <section id="games" class="section-lower bg-blue" aria-labelledby="games-heading">
       <div class="container">
         <h2 id="games-heading">Our games</h2>
         <p class="section-lead">A complete collection of our games... I know it's not much, but hopefully there will be more coming soon</p>
 
         <div class="grid">
-          <!-- tiles also link to details -->
-          <a class="card-link" href="#game-ensnapifacation">
-            <article class="tile" tabindex="0">
-              <div class="tile-art" style="background-image:url('resources/Ensnapifacation.png');background-size:cover;background-position:center"></div>
-              <h3>Ensnapifacation</h3>
-              <p class="tile-meta">Card game • 15min</p>
-            </article>
-          </a>
+          <article class="tile" tabindex="0">
+            <div class="tile-art" style="background-image:url('resources/Ensnapifacation.png');background-size:cover;background-position:center"></div>
+            <h3>Ensnapifacation</h3>
+            <p class="tile-meta">Card game • 15min</p>
+          </article>
 
-          <a class="card-link" href="#game-qazacatism">
-            <article class="tile" tabindex="0">
-              <div class="tile-art" style="background-image:url('resources/qazacatism-cover copy.png');background-size:cover;background-position:center"></div>
-              <h3>Qazacatism</h3>
-              <p class="tile-meta">Card Game • 7min</p>
-            </article>
-          </a>
+          <article class="tile" tabindex="0">
+            <div class="tile-art" style="background-image:url('resources/qazacatism-cover copy.png');background-size:cover;background-position:center"></div>
+            <h3>Qazacatism</h3>
+            <p class="tile-meta">Card Game • 7min</p>
+          </article>
+        </div>
+
+        <!-- Interactive Rules Viewer -->
+        <div class="rules-viewer">
+          <div class="rules-header">
+            <h2 class="rules-title">Interactive Game Rules</h2>
+            <p class="rules-subtitle">Click, explore, and master the chaos</p>
+          </div>
+
+          <div class="game-selector">
+            <button class="game-btn active-ensnap" id="btn-ensnap" onclick="switchGame('ensnapifacation')">
+              Ensnapifacation
+            </button>
+            <button class="game-btn" id="btn-qaza" onclick="switchGame('qazacatism')">
+              Qazacatism
+            </button>
+          </div>
+
+          <div class="mode-toggle">
+            <div class="mode-toggle-inner">
+              <button class="mode-btn active" id="btn-quick" onclick="switchMode(true)">
+                Quick Start
+              </button>
+              <button class="mode-btn" id="btn-full" onclick="switchMode(false)">
+                Full Rules
+              </button>
+            </div>
+          </div>
+
+          <div class="tabs-container" id="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('quick-start')">⚡ Quick Start</button>
+            <button class="tab-btn" onclick="switchTab('setup')">👥 Setup</button>
+            <button class="tab-btn" onclick="switchTab('phases')">🎯 Turn Phases</button>
+            <button class="tab-btn" onclick="switchTab('cards')">📚 Cards</button>
+            <button class="tab-btn" onclick="switchTab('winning')">🏆 Winning</button>
+          </div>
+
+          <div class="content-area" id="content-area">
+            <!-- Content will be injected here by JavaScript -->
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Game detail sections (each card goes to its own section)
-         (Simple: long-form details for each game on the same page.) -->
-    <section id="game-ensnapifacation" class="section-detail bg-yellow" aria-labelledby="ensnap-hed">
-      <div class="detail-inner">
-        <h2 id="ensnap-hed" class="detail-hed">Ensnapifacation</h2>
-        <p class="detail-copy">
-INTRO
-        <br> <br>  
-Welcome to Ensnapifacation.
-          <br>
-Ensnapifacation is a fast, loud card game built on organized chaos. Cards flip, piles collide, patterns appear, and everyone is watching for something different. The structure keeps the game moving — the chaos is what fills it.
-          <br>
-The rules aren’t here to be memorized. They’re here to give the chaos shape. If something feels too complex, remove rules until it clicks. If something feels unfair, argue it out. Most moments are decided by the table, not the rulebook.
-          <br>
-You’ll win by noticing things early, committing without hesitation, and backing your call when it’s questioned. Hesitation loses. Confidence counts.
-          <br>
-Rules are flexible. Chaos isn’t.
-          <br> <br> <br>
-          
-          30-Second Teach
-          <br> <br>
-This is basically Snap, but more intense.
-          <br> <br>
-Everyone starts with a face-down draw pile and a hand of 5 cards.
-          <br>
-Everyone gets a face down draw pile
-          <br>
-Each player has a discard/snap pile separate from their hand and draw pile
-          <br>
-Each round has three phases.
-          <br> <br>
-Action Phase:
-          <br>
-On your turn, draw your hand to five cards from your draw pile. You can play up to two cards from your hand to mess with people.
-          <br>
-If you play none, you discard 3 from your draw pile.
-          <br>
-Play one, discard 1 from your draw pile.
-          <br>
-Play two, discard nothing.
-          <br> <br>
-Snap Phase:
-          <br>
-Everyone flips their top card from their draw pile into their discard/snap pile at the same time.
-          <br>
-If two match, shout SNAP and slap each hand on the 2 matching piles you see — you steal the top 5 cards from the piles you snapped before anyone else (your hand is fully on the pile).
-          <br>
-Goldens match anything.
-          <br> <br>
-You can also shout PATTERN if the numbers make a sequence — everyone votes on it.
-          <br> <br>
-Keep Phase:
-          <br>
-Keep one card for the next round, shuffle the rest back into your draw pile.
-          <br>
-The last player with cards — or biggest pile — wins.
-          <br> <br>
-Arguing is allowed.
-          <br> <br>
-Goal:
-          <br>
-Be the last one standing, or have the biggest pile of cards by winning Snap rounds when you decide to finish
-
-
-        </p>
-        <p><a href="#games" class="btn ghost">Back to games</a></p>
-      </div>
-    </section>
-
-    <section id="game-qazacatism" class="section-detail bg-green" aria-labelledby="qaza-hed">
-      <div class="detail-inner">
-        <h2 id="qaza-hed" class="detail-hed">Qazacatism</h2>
-        <p class="detail-copy">
-Someone’s close.
-          <br>
-Everyone notices.
-          <br>
-Everything goes wrong.
-          <br> <br>
-QAZACATISM is a chaotic card game where winning paints a target on your back.
-Cancel, reverse, interrupt, and survive long enough to finish your setup.
-          <br> <br>
-If it feels unfair, it probably is.
-          <br> <br> <br>
-          30 SECOND TEACH — QAZACATISM
-          <br> <br>
-GOAL
-          <br>
-Be the first player to activate the Super Qaz by having both Super Qaz and Super Fish. When you play those 2 cards on your turn, you win instantly. 
-<br> <br>
-TURN
-          <br> 
-On your turn, you may play up to 3 cards. When you’re done, draw back up to 7 cards. If you ever run out of cards, draw 7 new ones.
-<br> <br>
-CARDS
-          <br>
-Most cards mess with hands, steal information, reshuffle the game, or knock players out. Some cards activate immediately when drawn. Hunters are dangerous — unless you’re saved by a Qaz. Super cards ignore most rules.
-<br> <br>
-INTERRUPTS
-          <br>
-If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then everyone puts their hand back in the deck, shuffles it, and draws 7 new ones
-        </p>
-        <p><a href="#games" class="btn ghost">Back to games</a></p>
-      </div>
-    </section>
-
-    <!-- Features section
-         (Simple: explains why you like these games. I swapped this to a darker background as requested.) -->
     <section id="features" class="section-lower bg-dark" aria-labelledby="features-heading">
       <div class="container">
         <h2 id="features-heading">Why we like these games</h2>
@@ -415,13 +621,11 @@ If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then
       </div>
     </section>
 
-    <!-- Contact section (replaced form with a single link button to your Google Form) -->
     <section id="contact" class="section-lower bg-blue" aria-labelledby="contact-heading">
       <div class="container">
         <h2 id="contact-heading">Get in touch</h2>
         <p>Wondering about something, asking about a game, or just saying hi? Fill out this google form</p>
 
-        <!-- Simple link button to Google Form as requested -->
         <p style="margin-top:1rem;">
           <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLScyiXBzhZaaw4fFN_U7o15FVv-h3ppfI_H6693ZOipNPSxM8A/viewform?usp=header" target="_blank" rel="noopener">Say hi?</a>
         </p>
@@ -429,48 +633,36 @@ If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then
     </section>
   </main>
 
-  <!-- Footer block: site footer and small links -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
-      <small>© <span id="year"></span> Cardists — Made for fun</small>
+      <small>© <span id="year"></span> Cardists – Made for fun</small>
       <div class="social">
-        <a href="#" aria-label="Twitter">Back</a>
-        <a href="#" aria-label="GitHub">to Top</a>
+        <a href="#intro" aria-label="Back to top">Back to Top</a>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts: GSAP drives animations and ScrollTrigger handles scroll-based reveals.
-       (Simple: this makes the cards float and elements animate on scroll.) -->
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  
   <script>
-    // small helper: sets the year in the footer
+    // Set year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Wait for fonts & layout to settle
+    // GSAP Animations
     (function(){
-      // This script runs the entrance animations and scroll reveals.
-      // (Simple: makes headings and cards slide/fade in, and makes cards float.)
       if (typeof gsap === 'undefined') return;
       gsap.registerPlugin(ScrollTrigger);
 
-      // Entrance timeline
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from(".hero-title", { y: 28, opacity: 0, duration: 0.8 })
         .from(".hero-sub", { y: 18, opacity: 0, duration: 0.6 }, "-=0.45")
         .from(".ctas .btn", { y: 14, opacity: 0, stagger: 0.08, duration: 0.45 }, "-=0.45")
         .from(".kpis li", { y: 10, opacity: 0, stagger: 0.06, duration: 0.35 }, "-=0.35")
-        .from(".card-a", { x: 140, opacity: 0, rotation: -12, duration: 0.75 }, "-=0.6")
-        .from(".card-b", { x: 170, opacity: 0, rotation: 6, duration: 0.75 }, "-=0.7")
-        .from(".card-c", { x: 210, opacity: 0, rotation: 10, duration: 0.8 }, "-=0.85");
+        .from(".cards", { x: 100, opacity: 0, duration: 0.8 }, "-=0.6");
 
-      // floating loop
-      gsap.to(".card-a", { y: -6, rotation: -3, duration: 2.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
-      gsap.to(".card-b", { y: -8, rotation: 4, duration: 2.3, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 0.18 });
-      gsap.to(".card-c", { y: -12, rotation: 2, duration: 2.7, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 0.36 });
+      // Floating animation is now only on hover via CSS
 
-      // parallax hero-right
       gsap.to(".hero-right", {
         y: -48,
         ease: "none",
@@ -482,7 +674,6 @@ If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then
         }
       });
 
-      // reveal tiles/features
       gsap.utils.toArray(".tile, .feature").forEach((el) => {
         gsap.from(el, {
           scrollTrigger: {
@@ -496,12 +687,516 @@ If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then
           delay: Math.random() * 0.12
         });
       });
-
-      // keyboard focus outline helper
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Tab") document.body.classList.add("show-focus");
-      });
     })();
+
+    // Interactive Rules Viewer State
+    let currentGame = 'ensnapifacation';
+    let currentTab = 'quick-start';
+    let quickMode = true;
+    let expandedCards = {};
+    let searchTerm = '';
+
+    // Card Data
+    const ensnapCards = [
+      { name: 'Normal Card', effect: 'No powers. Just Snap bait.', quote: 'I am just a normal card, kinda depresso.', count: 50, color: 'rgb(55, 65, 81)' },
+      { name: 'Steal', effect: 'Take 3 cards from another player\'s pile.', quote: 'Give me three of those things!', count: 12, color: 'rgb(147, 51, 234)' },
+      { name: 'Golden', effect: 'Matches with any card during SNAP.', quote: 'snap, Snap, SNap, SNAp, SNAP!', count: 10, color: 'rgb(234, 179, 8)' },
+      { name: 'DEATH & DEPRESSION', effect: 'Remove someone from the game instantly.', quote: 'Finish \'Em (Deep and Boomy voice)', count: 4, color: 'rgb(185, 28, 28)' },
+      { name: 'Nope', effect: 'Cancel anything—Snap, patterns, attacks, your fate.', quote: 'Oh yeah, you want to do that? NOPE!!', count: 14, color: 'rgb(37, 99, 235)' },
+      { name: 'Mirror Nope', effect: 'Reflect any attack back', quote: 'Haha!', count: 6, color: 'rgb(6, 182, 212)' },
+      { name: 'Discard', effect: 'Discard up to 4 cards from anyone\'s hand. Even your own.', quote: 'GET OUT OF HERE!', count: 8, color: 'rgb(234, 88, 12)' },
+      { name: 'Oof', effect: 'Someone has to discard 5 cards from your pile (not Normals). You have to play 1 on your turn if you have it', quote: 'Depressing…', count: 8, color: 'rgb(75, 85, 99)' },
+      { name: 'Ensnapifacation', effect: 'Becomes any card. Literally anything (apart from death and depression).', quote: 'LETS GOOOOOO PEOPLES!', count: 8, color: 'rgb(22, 163, 74)' }
+    ];
+
+    const qazaCards = [
+      { name: 'Cat', effect: 'If you have a Rat card when you pick this up, discard chosen cards and draw back to 7.', count: 5, color: 'rgb(249, 115, 22)' },
+      { name: 'Rat', effect: 'If you have a Cat card when you pick this up, discard chosen cards and draw back to 7.', count: 5, color: 'rgb(75, 85, 99)' },
+      { name: 'Hunter', effect: 'You lose and are out. Unless you have a Qaz to save you. (Play Immediately)', count: 5, color: 'rgb(185, 28, 28)' },
+      { name: 'Qaz', effect: 'Saves you from a Hunter card.', count: 5, color: 'rgb(59, 130, 246)' },
+      { name: 'North Wind', effect: 'Everyone gives their hand to the player on their left.', count: 3, color: 'rgb(34, 211, 238)' },
+      { name: 'Racoon', effect: 'Steal one card from another player (once per round).', count: 5, color: 'rgb(107, 114, 128)' },
+      { name: 'Cheater', effect: 'Look at someone else\'s cards.', count: 4, color: 'rgb(168, 85, 247)' },
+      { name: 'Tornado', effect: 'Put every card together, shuffle them, then re-deal.', count: 2, color: 'rgb(99, 102, 241)' },
+      { name: 'Wise Owl', effect: 'Ask for a card from another player, if they don\'t have it, you get one more chance.', count: 3, color: 'rgb(245, 158, 11)' },
+      { name: 'Snake', effect: 'Discard one of your animal cards. (Play Immediately)', count: 5, color: 'rgb(21, 128, 61)' },
+      { name: 'Fish', effect: 'Miss a round. (Play Immediately)', count: 5, color: 'rgb(56, 189, 248)' },
+      { name: 'Thermal Hunter', effect: 'Make a player lose.', count: 1, color: 'rgb(127, 29, 29)' },
+      { name: 'Nope', effect: 'NOPEs everything except Super cards, Thermal Hunter, and Hunter. Can Nope Nopes.', count: 7, color: 'rgb(37, 99, 235)' },
+      { name: 'Time Machine', effect: 'Look at the next card in the draw pile.', count: 4, color: 'rgb(192, 132, 252)' },
+      { name: 'Pick up 2', effect: 'Pick up the next 2 cards in the draw pile.', count: 4, color: 'rgb(34, 197, 94)' },
+      { name: 'Super Qaz', effect: 'If you have Super Fish when you pick this up, you win. Can Nope Thermal Hunter.', count: 2, color: 'rgb(250, 204, 21)' },
+      { name: 'Super Fish', effect: 'If you have Super Qaz when you pick this up, you win. Can Nope Thermal Hunter.', count: 2, color: 'rgb(6, 182, 212)' }
+    ];
+
+    function switchGame(game) {
+      currentGame = game;
+      currentTab = 'quick-start';
+      searchTerm = '';
+      expandedCards = {};
+      
+      document.getElementById('btn-ensnap').className = game === 'ensnapifacation' ? 'game-btn active-ensnap' : 'game-btn';
+      document.getElementById('btn-qaza').className = game === 'qazacatism' ? 'game-btn active-qaza' : 'game-btn';
+      
+      updateTabs();
+      renderContent();
+    }
+
+    function switchMode(isQuick) {
+      quickMode = isQuick;
+      document.getElementById('btn-quick').className = isQuick ? 'mode-btn active' : 'mode-btn';
+      document.getElementById('btn-full').className = !isQuick ? 'mode-btn active' : 'mode-btn';
+      
+      document.getElementById('tabs-container').style.display = isQuick ? 'flex' : 'none';
+      renderContent();
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(t => t.className = 'tab-btn');
+      event.target.className = 'tab-btn active';
+      renderContent();
+    }
+
+    function updateTabs() {
+      const container = document.getElementById('tabs-container');
+      const tabs = currentGame === 'ensnapifacation'
+        ? ['quick-start', 'setup', 'phases', 'cards', 'winning']
+        : ['quick-start', 'setup', 'gameplay', 'cards', 'winning'];
+      
+      const icons = {
+        'quick-start': '⚡',
+        'setup': '👥',
+        'phases': '🎯',
+        'gameplay': '🎮',
+        'cards': '📚',
+        'winning': '🏆'
+      };
+      
+      container.innerHTML = tabs.map(tab => `
+        <button class="tab-btn${currentTab === tab ? ' active' : ''}" onclick="switchTab('${tab}')">
+          ${icons[tab]} ${tab.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+        </button>
+      `).join('');
+    }
+
+    function toggleCardExpansion(cardName) {
+      expandedCards[cardName] = !expandedCards[cardName];
+      renderContent();
+    }
+
+    function renderContent() {
+      const container = document.getElementById('content-area');
+      
+      if (!quickMode) {
+        // Full Rules Mode
+        if (currentGame === 'ensnapifacation') {
+          container.innerHTML = `
+            <div class="full-rules-text">
+              <h3>INTRO</h3>
+              <p>Welcome to Ensnapifacation.</p>
+              <p>Ensnapifacation is a fast, loud card game built on organized chaos. Cards flip, piles collide, patterns appear, and everyone is watching for something different. The structure keeps the game moving — the chaos is what fills it.</p>
+              <p>The rules aren't here to be memorized. They're here to give the chaos shape. If something feels too complex, remove rules until it clicks. If something feels unfair, argue it out. Most moments are decided by the table, not the rulebook.</p>
+              <p>You'll win by noticing things early, committing without hesitation, and backing your call when it's questioned. Hesitation loses. Confidence counts.</p>
+              <p style="font-style:italic">Rules are flexible. Chaos isn't.</p>
+
+              <h3>30-Second Teach</h3>
+              <p>This is basically Snap, but more intense.</p>
+              <p>Everyone starts with a face-down draw pile and a hand of 5 cards. Everyone gets a face down draw pile. Each player has a discard/snap pile separate from their hand and draw pile. Each round has three phases.</p>
+
+              <h4 style="color: rgb(34, 211, 238)">Action Phase:</h4>
+              <p>On your turn, draw your hand to five cards from your draw pile. You can play up to two cards from your hand to mess with people.</p>
+              <ul>
+                <li>If you play none, you discard 3 from your draw pile.</li>
+                <li>Play one, discard 1 from your draw pile.</li>
+                <li>Play two, discard nothing.</li>
+              </ul>
+
+              <h4 style="color: rgb(248, 113, 113)">Snap Phase:</h4>
+              <p>Everyone flips their top card from their draw pile into their discard/snap pile at the same time.</p>
+              <p>If two match, shout SNAP and slap each hand on the 2 matching piles you see — you steal the top 5 cards from the piles you snapped before anyone else (your hand is fully on the pile). Goldens match anything.</p>
+              <p>You can also shout PATTERN if the numbers make a sequence — everyone votes on it.</p>
+
+              <h4 style="color: rgb(34, 211, 238)">Keep Phase:</h4>
+              <p>Keep one card for the next round, shuffle the rest back into your draw pile.</p>
+              <p>The last player with cards — or biggest pile — wins.</p>
+              <p><strong>Arguing is allowed.</strong></p>
+
+              <h4 style="color: rgb(250, 204, 21)">Goal:</h4>
+              <p>Be the last one standing, or have the biggest pile of cards by winning Snap rounds when you decide to finish</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="full-rules-text">
+              <p>Someone's close.</p>
+              <p>Everyone notices.</p>
+              <p>Everything goes wrong.</p>
+              <p><strong>QAZACATISM</strong> is a chaotic card game where winning paints a target on your back. Cancel, reverse, interrupt, and survive long enough to finish your setup.</p>
+              <p>If it feels unfair, it probably is.</p>
+
+              <h3>30 SECOND TEACH — QAZACATISM</h3>
+
+              <h4 style="color: rgb(250, 204, 21)">GOAL</h4>
+              <p>Be the first player to activate the Super Qaz by having both Super Qaz and Super Fish. When you play those 2 cards on your turn, you win instantly.</p>
+
+              <h4 style="color: rgb(192, 132, 252)">TURN</h4>
+              <p>On your turn, you may play up to 3 cards. When you're done, draw back up to 7 cards. If you ever run out of cards, draw 7 new ones.</p>
+
+              <h4 style="color: rgb(248, 113, 113)">CARDS</h4>
+              <p>Most cards mess with hands, steal information, reshuffle the game, or knock players out. Some cards activate immediately when drawn. Hunters are dangerous — unless you're saved by a Qaz. Super cards ignore most rules.</p>
+
+              <h4 style="color: rgb(251, 146, 60)">INTERRUPTS</h4>
+              <p>If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then everyone puts their hand back in the deck, shuffles it, and draws 7 new ones</p>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      // Quick Mode - Tabbed Content
+      if (currentTab === 'quick-start') {
+        if (currentGame === 'ensnapifacation') {
+          container.innerHTML = `
+            <div class="info-box" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);">
+              <h3 style="color: rgb(74, 222, 128); margin: 0 0 0.5rem 0;">This is basically Snap, but more intense.</h3>
+              <p style="color: rgb(203, 213, 225); margin: 0;">Everyone starts with a face-down draw pile and a hand of 5 cards.</p>
+            </div>
+
+            <div class="quick-grid">
+              <div class="quick-card" style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3);">
+                <h4 style="color: rgb(192, 132, 252);">Action Phase</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin-bottom: 0.5rem;">Play up to 2 cards to mess with people:</p>
+                <ul>
+                  <li>• Play 0? Discard 3</li>
+                  <li>• Play 1? Discard 1</li>
+                  <li>• Play 2? No discard</li>
+                </ul>
+              </div>
+
+              <div class="quick-card" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                <h4 style="color: rgb(248, 113, 113);">Snap Phase</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin-bottom: 0.5rem;">Everyone flips simultaneously:</p>
+                <ul>
+                  <li>• If 2 match, yell SNAP!</li>
+                  <li>• Slap matching piles</li>
+                  <li>• Steal top 5 cards</li>
+                  <li>• Goldens match anything</li>
+                </ul>
+              </div>
+
+              <div class="quick-card" style="background: rgba(6, 182, 212, 0.2); border-color: rgba(6, 182, 212, 0.3);">
+                <h4 style="color: rgb(34, 211, 238);">Keep Phase</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin-bottom: 0.5rem;">End your turn:</p>
+                <ul>
+                  <li>• Keep 1 card for next round</li>
+                  <li>• Shuffle rest back into pile</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="info-box" style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3);">
+              <p style="color: rgb(250, 204, 21); font-weight: bold; margin-bottom: 0.5rem;">🎯 Goal:</p>
+              <p style="color: rgb(203, 213, 225); margin-bottom: 0.75rem;">Be the last one standing, or have the biggest pile when you decide to end.</p>
+              <p style="color: rgb(250, 204, 21); font-weight: bold; margin-bottom: 0.5rem;">⚡ Pro tip:</p>
+              <p style="color: rgb(203, 213, 225); font-style: italic; margin: 0;">Arguing is allowed.</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+              <h3 style="color: rgb(96, 165, 250); margin: 0 0 0.5rem 0;">Someone's close. Everyone notices. Everything goes wrong.</h3>
+              <p style="color: rgb(203, 213, 225); margin: 0;">A chaotic card game where winning paints a target on your back.</p>
+            </div>
+
+            <div class="quick-grid">
+              <div class="quick-card" style="background: rgba(234, 179, 8, 0.2); border-color: rgba(234, 179, 8, 0.3);">
+                <h4 style="color: rgb(250, 204, 21);">🎯 Goal</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">Be the first to activate Super Qaz by having both <strong style="color: rgb(250, 204, 21);">Super Qaz</strong> and <strong style="color: rgb(34, 211, 238);">Super Fish</strong>. Play them on your turn = instant win.</p>
+              </div>
+
+              <div class="quick-card" style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3);">
+                <h4 style="color: rgb(192, 132, 252);">🎮 Your Turn</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin-bottom: 0.5rem;">Play up to 3 cards, then draw back to 7.</p>
+                <p style="font-size: 0.85rem; color: rgb(148, 163, 184); font-style: italic;">If you run out of cards, draw 7 new ones.</p>
+              </div>
+
+              <div class="quick-card" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                <h4 style="color: rgb(248, 113, 113);">⚠️ Cards</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">Most cards mess with hands, steal info, reshuffle the game, or knock players out. Some activate immediately when drawn.</p>
+              </div>
+
+              <div class="quick-card" style="background: rgba(249, 115, 22, 0.2); border-color: rgba(249, 115, 22, 0.3);">
+                <h4 style="color: rgb(251, 146, 60);">💥 Interrupts</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">Pick up Thermal Hunter with a Super card? Everyone puts their hand back, shuffles, and draws 7 new ones.</p>
+              </div>
+            </div>
+          `;
+        }
+      } else if (currentTab === 'setup') {
+        if (currentGame === 'ensnapifacation') {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Game Setup</h3>
+            
+            <div class="setup-box">
+              <h4 style="color: rgb(34, 211, 238); margin-bottom: 0.5rem;">Getting Started:</h4>
+              <ul class="setup-list">
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>Everyone gets a pile of cards (face down <strong>draw pile</strong>)</span></li>
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>Each player has a <strong>discard/snap pile</strong> separate from their hand and draw pile</span></li>
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>Draw <strong>5 cards</strong> from your draw pile for your hand</span></li>
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span><strong>Optional:</strong> A Judge can settle Snap battles or Pattern disputes</span></li>
+              </ul>
+            </div>
+
+            <div class="setup-box">
+              <h4 style="color: rgb(250, 204, 21); margin-bottom: 0.5rem;">Player Count Guide:</h4>
+              <table style="width: 100%; font-size: 0.9rem;">
+                <thead>
+                  <tr style="border-bottom: 1px solid rgb(71, 85, 105);">
+                    <th style="text-align: left; padding: 0.5rem 0; color: rgb(250, 204, 21);">Players</th>
+                    <th style="text-align: left; padding: 0.5rem 0; color: rgb(250, 204, 21);">Cards Each</th>
+                    <th style="text-align: left; padding: 0.5rem 0; color: rgb(250, 204, 21);">Notes</th>
+                  </tr>
+                </thead>
+                <tbody style="color: rgb(203, 213, 225);">
+                  <tr style="border-bottom: 1px solid rgb(51, 65, 85);"><td style="padding: 0.5rem 0;">2</td><td>60</td><td style="color: rgb(148, 163, 184);">Low player count</td></tr>
+                  <tr style="border-bottom: 1px solid rgb(51, 65, 85);"><td style="padding: 0.5rem 0;">3</td><td>40</td><td style="color: rgb(74, 222, 128); font-weight: bold;">✓ Recommended</td></tr>
+                  <tr style="border-bottom: 1px solid rgb(51, 65, 85);"><td style="padding: 0.5rem 0;">4</td><td>30</td><td style="color: rgb(251, 146, 60); font-weight: bold;">🔥 CHAOS MODE</td></tr>
+                  <tr style="border-bottom: 1px solid rgb(51, 65, 85);"><td style="padding: 0.5rem 0;">5-6</td><td>24-20</td><td style="color: rgb(74, 222, 128); font-weight: bold;">✓ Recommended</td></tr>
+                  <tr style="border-bottom: 1px solid rgb(51, 65, 85);"><td style="padding: 0.5rem 0;">7-8</td><td>17-15</td><td style="color: rgb(148, 163, 184);">Low card count</td></tr>
+                  <tr><td style="padding: 0.5rem 0;">9-10</td><td>13-12</td><td style="color: rgb(248, 113, 113);">⚠️ Tiny piles</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="info-box" style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">
+              <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin: 0;"><span style="font-weight: bold; color: rgb(192, 132, 252);">Remember:</span> This game is designed to be flexible. Change anything if you want to.</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Game Setup</h3>
+            
+            <div class="setup-box">
+              <h4 style="color: rgb(34, 211, 238); margin-bottom: 0.75rem;">Preparing the Game:</h4>
+              <ul class="setup-list">
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>Put all of the cards face down in a <strong>draw pile</strong></span></li>
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>When the draw pile runs out you shuffle the <strong>discard pile</strong> and use that</span></li>
+                <li><span style="color: rgb(34, 211, 238); font-weight: bold;">•</span> <span>Deal each player <strong>7 cards</strong></span></li>
+              </ul>
+            </div>
+          `;
+        }
+      } else if (currentTab === 'phases' || currentTab === 'gameplay') {
+        if (currentGame === 'ensnapifacation') {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Turn Phases (Repeat These 3)</h3>
+
+            <div class="phase-box" style="background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.3);">
+              <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                <span class="phase-number" style="background: rgb(168, 85, 247);">1</span>
+                <h4 style="font-size: 1.5rem; color: rgb(192, 132, 252); margin: 0;">ACTION PHASE</h4>
+              </div>
+              <p style="color: rgb(203, 213, 225); margin-bottom: 1rem;">Look at your 5 cards and unleash chaos.</p>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem;">
+                <p style="color: rgb(226, 232, 240); font-weight: bold; margin-bottom: 0.75rem;">You can play up to 2 cards:</p>
+                <ul class="setup-list">
+                  <li><span style="color: rgb(248, 113, 113); font-weight: bold;">○</span> <span>Play <strong>0 cards?</strong> Discard 3 cards from your draw pile</span></li>
+                  <li><span style="color: rgb(250, 204, 21); font-weight: bold;">○</span> <span>Play <strong>1 card?</strong> Discard 1 extra from your draw pile</span></li>
+                  <li><span style="color: rgb(74, 222, 128); font-weight: bold;">○</span> <span>Play <strong>2 cards?</strong> No extra discard, lucky you</span></li>
+                </ul>
+                <p style="color: rgb(148, 163, 184); font-style: italic; margin-top: 0.75rem; margin-bottom: 0;">Play cards to mess with others, steal, block, cancel, obliterate—whatever you want. Play your cards on your discard/snap pile on your turn.</p>
+              </div>
+
+              <div style="margin-top: 1rem; background: rgba(168, 85, 247, 0.3); padding: 0.75rem; border-radius: 0.5rem;">
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin: 0;"><strong style="color: rgb(192, 132, 252);">Turn Order:</strong> The player to the right of whoever started the last round (or the dealer) goes first in the Action Phase.</p>
+              </div>
+            </div>
+
+            <div class="phase-box" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); margin-top: 1.5rem;">
+              <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                <span class="phase-number" style="background: rgb(239, 68, 68);">2</span>
+                <h4 style="font-size: 1.5rem; color: rgb(248, 113, 113); margin: 0;">SNAP PHASE</h4>
+              </div>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <p style="color: rgb(226, 232, 240); font-weight: bold; margin-bottom: 0.5rem;">The Snap:</p>
+                <ol style="color: rgb(203, 213, 225); padding-left: 1.5rem; margin: 0;">
+                  <li>Each player grabs the top card from their pile, holds it face down</li>
+                  <li>Count down: <strong>"3… 2… 1… PLAY!"</strong></li>
+                  <li>Everyone slams their card onto their Discard/Snap pile</li>
+                </ol>
+              </div>
+
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <p style="color: rgb(226, 232, 240); font-weight: bold; margin-bottom: 0.5rem;">If 2 or more cards match:</p>
+                <ul class="setup-list">
+                  <li><span style="color: rgb(250, 204, 21);">✦</span> <span>First player to shout <strong style="color: rgb(250, 204, 21);">"SNAP!"</strong> and put their hands on all snappable piles wins</span></li>
+                  <li><span style="color: rgb(250, 204, 21);">✦</span> <span>Take the <strong>top 5 cards</strong> from each person's draw pile that you snapped and put it on the bottom of your draw pile</span></li>
+                  <li><span style="color: rgb(250, 204, 21);">✦</span> <span><strong style="color: rgb(250, 204, 21);">Golden Cards</strong> can match any card during this phase</span></li>
+                </ul>
+              </div>
+
+              <div style="background: rgba(249, 115, 22, 0.2); border: 1px solid rgba(249, 115, 22, 0.4); padding: 1rem; border-radius: 0.5rem;">
+                <p style="color: rgb(251, 146, 60); font-weight: bold; margin-bottom: 0.5rem;">🔢 PATTERNS</p>
+                <p style="color: rgb(203, 213, 225); font-size: 0.9rem; margin-bottom: 0.75rem;">All the cards have numbers. If you see 3 or more number cards in a pattern on the snap phase at the top of the piles (like 1-2-3), yell <strong>"PATTERN!"</strong></p>
+                <p style="color: rgb(226, 232, 240); font-weight: bold; font-size: 0.9rem; margin-bottom: 0.5rem;">Everyone votes if it's a good or bad pattern:</p>
+                <ul style="color: rgb(203, 213, 225); font-size: 0.85rem; list-style: none; padding: 0;">
+                  <li>• If more than half vote it's a good pattern → take 4 cards from each 'Pattern'-ed player's discard/snap pile</li>
+                  <li>• If exactly half vote yes → take 2 cards from each pile</li>
+                  <li>• If more than half vote no → get nothing</li>
+                  <li>• A Judge (if chosen) can break ties or decide if the pattern counts</li>
+                </ul>
+                <p style="color: rgb(148, 163, 184); font-size: 0.75rem; font-style: italic; margin-top: 0.5rem; margin-bottom: 0;">Note: This does not work if 2 or 3 people playing</p>
+              </div>
+            </div>
+
+            <div class="phase-box" style="background: rgba(6, 182, 212, 0.2); border: 1px solid rgba(6, 182, 212, 0.3); margin-top: 1.5rem;">
+              <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                <span class="phase-number" style="background: rgb(6, 182, 212);">3</span>
+                <h4 style="font-size: 1.5rem; color: rgb(34, 211, 238); margin: 0;">KEEP PHASE</h4>
+              </div>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem;">
+                <p style="color: rgb(203, 213, 225); margin-bottom: 0.5rem;">Pick 1 card from your hand to hold onto for future Action Phases. Shuffle the rest back into your pile.</p>
+                <ul style="color: rgb(148, 163, 184); font-size: 0.85rem; list-style: none; padding: 0; margin: 0.75rem 0 0 0;">
+                  <li>• You can only have one "keep" card at a time</li>
+                  <li>• It goes back to your hand on the next action phase</li>
+                  <li>• You have to "keep" 1 card</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Gameplay</h3>
+
+            <div class="quick-grid">
+              <div class="quick-card" style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3);">
+                <h4 style="color: rgb(192, 132, 252);">🎮 Your Turn</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225); margin-bottom: 0.5rem;">On your turn, you may play up to 3 cards.</p>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">When you're done, draw back up to 7 cards.</p>
+                <p style="font-size: 0.85rem; color: rgb(148, 163, 184); font-style: italic; margin-top: 0.5rem;">If you ever run out of cards, draw 7 new ones.</p>
+              </div>
+
+              <div class="quick-card" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3);">
+                <h4 style="color: rgb(248, 113, 113);">⚠️ Cards</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">Most cards mess with hands, steal information, reshuffle the game, or knock players out.</p>
+                <p style="font-size: 0.85rem; color: rgb(148, 163, 184); font-style: italic; margin-top: 0.5rem;">Some cards activate immediately when drawn. Hunters are dangerous — unless you're saved by a Qaz. Super cards ignore most rules.</p>
+              </div>
+
+              <div class="quick-card" style="background: rgba(249, 115, 22, 0.2); border-color: rgba(249, 115, 22, 0.3); grid-column: span 2;">
+                <h4 style="color: rgb(251, 146, 60);">💥 Interrupts</h4>
+                <p style="font-size: 0.9rem; color: rgb(203, 213, 225);">If you pick up a Thermal Hunter while you have a Super Qaz or a Super Fish, then everyone puts their hand back in the deck, shuffles it, and draws 7 new ones.</p>
+              </div>
+            </div>
+          `;
+        }
+      } else if (currentTab === 'cards') {
+        const cards = currentGame === 'ensnapifacation' ? ensnapCards : qazaCards;
+        const filteredCards = searchTerm 
+          ? cards.filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()) || c.effect.toLowerCase().includes(searchTerm.toLowerCase()))
+          : cards;
+
+        let html = `
+          <div class="search-box">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input 
+              type="text" 
+              class="search-input" 
+              placeholder="Search cards..."
+              value="${searchTerm}"
+              oninput="searchTerm = this.value; renderContent();"
+            />
+          </div>
+
+          <div class="card-list">
+        `;
+
+        if (filteredCards.length === 0) {
+          html += `
+            <div style="text-align: center; padding: 3rem; color: rgb(148, 163, 184); grid-column: 1 / -1;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 1rem; opacity: 0.5;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <p>No cards found matching "${searchTerm}"</p>
+            </div>
+          `;
+        } else {
+          filteredCards.forEach(card => {
+            const isExpanded = expandedCards[card.name];
+            html += `
+              <div class="card-item">
+                <button class="card-header" onclick="toggleCardExpansion('${card.name.replace(/'/g, "\\'")}')">
+                  <div class="card-header-left">
+                    <div class="card-dot" style="background: ${card.color};"></div>
+                    <span style="font-weight: bold;">${card.name}</span>
+                    <span style="font-size: 0.75rem; color: rgb(148, 163, 184);">×${card.count}</span>
+                  </div>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${isExpanded 
+                      ? '<polyline points="18 15 12 9 6 15"></polyline>'
+                      : '<polyline points="6 9 12 15 18 9"></polyline>'
+                    }
+                  </svg>
+                </button>
+                
+                <div class="card-body${isExpanded ? ' expanded' : ''}">
+                  <div class="card-effect">${card.effect}</div>
+                  ${card.quote ? `<div class="card-quote">"${card.quote}"</div>` : ''}
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        html += `</div>`;
+        container.innerHTML = html;
+      } else if (currentTab === 'winning') {
+        if (currentGame === 'ensnapifacation') {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Winning the Game</h3>
+            
+            <div class="info-box" style="background: linear-gradient(to right, rgba(234, 179, 8, 0.2), rgba(249, 115, 22, 0.2)); border: 1px solid rgba(234, 179, 8, 0.3);">
+              <h4 style="font-weight: bold; font-size: 1.25rem; color: rgb(250, 204, 21); margin-bottom: 1rem;">Choose Before Starting:</h4>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <p style="font-weight: bold; font-size: 1.125rem; color: white; margin-bottom: 0.5rem;">🏆 Last Player Standing</p>
+                <p style="color: rgb(203, 213, 225); margin: 0;">The last player with cards in their pile wins.</p>
+              </div>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem;">
+                <p style="font-weight: bold; font-size: 1.125rem; color: white; margin-bottom: 0.5rem;">📊 Biggest Pile</p>
+                <p style="color: rgb(203, 213, 225); margin: 0;">When you decide to end the game, whoever has the most cards wins.</p>
+              </div>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Winning the Game</h3>
+            
+            <div class="info-box" style="background: linear-gradient(to right, rgba(234, 179, 8, 0.2), rgba(6, 182, 212, 0.2)); border: 1px solid rgba(234, 179, 8, 0.3);">
+              <h4 style="font-weight: bold; font-size: 1.25rem; color: rgb(250, 204, 21); margin-bottom: 1rem;">How to Win:</h4>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem;">
+                <p style="font-weight: bold; font-size: 1.125rem; color: white; margin-bottom: 0.5rem;">✨ Activate the Super Qaz</p>
+                <p style="color: rgb(203, 213, 225); margin-bottom: 0.5rem;">Pick up and activate the Super Qaz by getting both <strong style="color: rgb(250, 204, 21);">Super Qaz</strong> and <strong style="color: rgb(34, 211, 238);">Super Fish</strong> cards and place them down on your turn.</p>
+                <p style="color: rgb(148, 163, 184); font-size: 0.9rem; font-style: italic; margin: 0;">When you play both cards together, you win instantly!</p>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Initial render
+    renderContent();
   </script>
 </body>
 </html>
